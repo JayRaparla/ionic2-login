@@ -1,3 +1,21 @@
-.form {
+/*.form {
+}
 
+.item {
+    border-style: solid;
+}*/
+
+.item-divider{
+    border: 2px solid cornflowerblue;
+    border-radius: 8px;
+}
+
+input {
+    width: 100%;
+    border: none;
+}
+
+.error-box {
+    color: red;
+    text-transform: uppercase;
 }

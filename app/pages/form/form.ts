@@ -4,6 +4,8 @@ import { HomePage } from '../home/home';
 // Angular 2 services, directives and objects
 import { FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl } from '@angular/common';
 import {CustomValidators} from '../../validators/CustomValidators';
+import {Focuser} from '../../components/focuser/focuser';
+//import {ShowHidePassword} from '../../components/show-hide-password/show-hide-password';
 
 /*
   Generated class for the FormPage page.
@@ -13,13 +15,16 @@ import {CustomValidators} from '../../validators/CustomValidators';
 */
 @Component({
   templateUrl: 'build/pages/form/form.html',
-  directives: [FORM_DIRECTIVES]
+  directives: [FORM_DIRECTIVES, Focuser]
 })
 export class FormPage {
 
   authForm: ControlGroup;
   username: AbstractControl;
   password: AbstractControl;
+  type: string = 'password';
+  ios: string = 'ios-eye-off';
+  md: string = 'md-eye-off';
 
   constructor(
     private nav: NavController,
@@ -30,7 +35,7 @@ export class FormPage {
       // defines three validation rules
       // required and minLenght are Angular2 predefined validators
       // checkFirstCharacterValidator is a custom validator
-      'username': ['', Validators.compose([Validators.required, Validators.minLength(8), CustomValidators.checkFirstCharacterValidator])],
+      'username': ['alessia.raimondi@athesys.it', Validators.compose([Validators.required, Validators.minLength(8), CustomValidators.checkFirstCharacterValidator])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(8), CustomValidators.checkFirstCharacterValidator])] 
     })
 
@@ -49,4 +54,24 @@ export class FormPage {
       this.nav.push(HomePage); 
     }
   }; 
+
+  showPwd() {
+    console.log('Show Pwd');
+    if(this.type === 'password'){
+      this.type = 'text';
+      this.ios = 'ios-eye';
+      this.md = 'md-eye';
+    }
+    else {
+      this.type = 'password';
+      this.ios = 'ios-eye-off';
+      this.md = 'md-eye-off';
+    }
+  }
+
+  clearInput(form){
+    console.log(form.controls['username'].value);
+    form.controls['username'].updateValue('');
+    form.controls['username']['_pristine']=true;
+  }
 }

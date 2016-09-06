@@ -10,31 +10,39 @@
 
 <ion-content padding class="form">
   <form [ngFormModel]="authForm" (submit)="onSubmit(authForm)">
-    <!-- If the username is not valid (!username.valid) after a field has been touched (username.touched),
-      Angular2 add a class error to the ion-input element  -->
-    <ion-item [class.error]="!username.valid && username.touched">
-      <ion-label floating>Username</ion-label>
-      <!-- ngFormControl: keyword that defines a control object (a single form field) --> 
-      <ion-input type="text" value="" [ngFormControl]="username"></ion-input>
-    </ion-item>
     <!-- If username has validation errors, a related description become visible -->
-    <div *ngIf="username.hasError('required') && username.touched" 
-        class="error-box">* Username is required!</div>
-    <div *ngIf="username.hasError('minlength') && username.touched" 
-        class="error-box">* Minimum username length is 8!</div>            
+    <ion-row class="item-divider"> 
+      <!-- If the username is not valid (!username.valid) after a field has been touched (username.touched),
+            Angular2 add a class error to the ion-input element  -->
+      <ion-item [class.error]="!username.valid && username.touched" no-lines>
+        <!-- ngFormControl: keyword that defines a control object (a single form field) --> 
+        <input type="email" placeholder="Username" value="" [ngFormControl]="username"/>
+        <ion-icon ios="ios-close-circle" md="md-close-circle" item-right (tap)="clearInput(authForm)" [hidden]="username.value.length == 0"></ion-icon>
+        <!--<button item-right clear (tap)="clearInput(authForm)" [hidden]="username.value.length == 0">
+          <ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon>
+        </button>-->
+      </ion-item>
+    </ion-row>
+    <div *ngIf="username.hasError('required') && username.touched" class="error-box">Username is required!</div>
+    <div *ngIf="username.hasError('minlength') && username.touched" class="error-box">Minimum username length is 8!</div>            
     <div *ngIf="username.hasError('checkFirstCharacterValidator') && username.touched" 
-        class="error-box">* Username cant't start with number!</div>     
-    <ion-item floating-label [class.error]="!password.valid && password.touched">
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" value="" [ngFormControl]="password"></ion-input>
-    </ion-item>
-    <div *ngIf="password.hasError('required') && password.touched" 
-        class="error-box">* Password is required</div>    
-    <div *ngIf="password.hasError('minlength') && password.touched" 
-        class="error-box">* Minimum password length is 8!</div>                     
+      class="error-box">Username cant't start with number!</div>
+    <br/>    
+    <ion-row class="item-divider"> 
+      <ion-item [class.error]="!password.valid && password.touched" no-lines>
+        <input type="{{type}}" placeholder="Password" value="" [ngFormControl]="password"/>
+        <!-- password.pristine=true se il controllo non è stato modificato  -->
+        <ion-icon ios="{{ios}}" md="{{md}}" item-right (tap)="showPwd()" [hidden]="password.value.length == 0"></ion-icon>
+        <!--<button item-right clear (tap)="showPwd()" [hidden]="password.value.length == 0">
+          <ion-icon ios="{{ios}}" md="{{md}}"></ion-icon>
+        </button>-->
+      </ion-item>
+    </ion-row>
+    <div *ngIf="password.hasError('required') && password.touched" class="error-box">Password is required</div>    
+    <div *ngIf="password.hasError('minlength') && password.touched" class="error-box">Minimum password length is 8!</div>                     
     <div *ngIf="password.hasError('checkFirstCharacterValidator') && password.touched" 
-        class="error-box">* Password cant't start with number!</div>   
-    <br/><br/>
+      class="error-box">Password cant't start with number!</div>
+    <br/>
     <!-- the submit button is disabled if the form is not valid -->
     <button type="submit" class="custom-button" [disabled]="!authForm.valid" block>Submit</button>
   </form>
