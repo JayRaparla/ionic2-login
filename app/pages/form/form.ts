@@ -25,18 +25,21 @@ export class FormPage {
   type: string = 'password';
   ios: string = 'ios-eye-off';
   md: string = 'md-eye-off';
+  emailPattern: string;
 
   constructor(
     private nav: NavController,
     fb: FormBuilder
   ) {
+    this.emailPattern = '^[_a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$';
+    console.log(this.emailPattern);
     // the form fields are group into the authForm
     this.authForm = fb.group({
       // defines three validation rules
       // required and minLenght are Angular2 predefined validators
       // checkFirstCharacterValidator is a custom validator
-      'username': ['alessia.raimondi@athesys.it', Validators.compose([Validators.required, Validators.minLength(8), CustomValidators.checkFirstCharacterValidator])],
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(8), CustomValidators.checkFirstCharacterValidator])] 
+      'username': ['alessia.raimondi@athesys.it', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern(this.emailPattern)])],
+      'password': ['Passw0rd', Validators.compose([Validators.required, Validators.minLength(8), CustomValidators.checkFirstCharacterValidator])] 
     })
 
     // connect the abstract controls with the fields in the HTML side

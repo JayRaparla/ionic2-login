@@ -18,24 +18,17 @@
         <!-- ngFormControl: keyword that defines a control object (a single form field) --> 
         <input type="email" placeholder="Username" value="" [ngFormControl]="username"/>
         <ion-icon ios="ios-close-circle" md="md-close-circle" item-right (tap)="clearInput(authForm)" [hidden]="username.value.length == 0"></ion-icon>
-        <!--<button item-right clear (tap)="clearInput(authForm)" [hidden]="username.value.length == 0">
-          <ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon>
-        </button>-->
       </ion-item>
     </ion-row>
     <div *ngIf="username.hasError('required') && username.touched" class="error-box">Username is required!</div>
-    <div *ngIf="username.hasError('minlength') && username.touched" class="error-box">Minimum username length is 8!</div>            
-    <div *ngIf="username.hasError('checkFirstCharacterValidator') && username.touched" 
-      class="error-box">Username cant't start with number!</div>
+    <div *ngIf="username.hasError('minlength') && username.touched" class="error-box">Minimum username length is 8!</div> 
+    <div *ngIf="username.hasError('pattern') && username.touched" class="error-box">Type an email address!</div>            
     <br/>    
     <ion-row class="item-divider"> 
       <ion-item [class.error]="!password.valid && password.touched" no-lines>
         <input type="{{type}}" placeholder="Password" value="" [ngFormControl]="password"/>
         <!-- password.pristine=true se il controllo non è stato modificato  -->
         <ion-icon ios="{{ios}}" md="{{md}}" item-right (tap)="showPwd()" [hidden]="password.value.length == 0"></ion-icon>
-        <!--<button item-right clear (tap)="showPwd()" [hidden]="password.value.length == 0">
-          <ion-icon ios="{{ios}}" md="{{md}}"></ion-icon>
-        </button>-->
       </ion-item>
     </ion-row>
     <div *ngIf="password.hasError('required') && password.touched" class="error-box">Password is required</div>    
